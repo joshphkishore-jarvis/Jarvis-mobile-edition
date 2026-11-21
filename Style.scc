@@ -1,7 +1,7 @@
 style.css:
 body {
-  background-color: #00e54;
-  color: #00e5ff;
+  background-color: #0000;
+  color: #00e54;
   font-family: monospace;
   display: flex;
   justify-content: center;
