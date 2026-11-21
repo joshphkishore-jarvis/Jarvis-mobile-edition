@@ -1,16 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>J.A.R.V.I.S.</title>
+  <!-- Sci-fi font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <h1 class="jarvis-title">J.A.R.V.I.S.</h1>
     <p class="subtitle">MOBILE EDITION</p>
+
+    <!-- Optional: Arc Reactor Core Visual -->
+    <div class="core-wrapper">
+      <div class="outer-ring"></div>
+      <div class="inner-core"></div>
+    </div>
     
     <div class="status-panel">
       <h2>SYSTEM STATUS</h2>
@@ -19,11 +26,17 @@
       <p>VOICE <span>LOCKED</span></p>
     </div>
 
+    <!-- Chat Output Window (Where replies appear) -->
+    <div id="chatBox" class="chat-box"></div>
+
+    <!-- Input Area -->
     <div class="input-group">
       <input type="text" id="userInput" placeholder="Ask J.A.R.V.I.S...">
       <button id="sendBtn">SEND</button>
     </div>
   </div>
+
+  <!-- Connects your logic/API -->
+  <script src="script.js"></script>
 </body>
 </html>
-
