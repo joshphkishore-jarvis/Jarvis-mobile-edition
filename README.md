@@ -1,2 +1,78 @@
 Jarvis mobile edition 
 MY JARVIS AI ASSISTANT 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J.A.R.V.I.S Brain Test</title>
+<style>
+  body { background: #000; color: #0ff; font-family: monospace; padding: 20px; }
+  h1 { text-align: center; letter-spacing: 4px; }
+  #status { color: #f00; text-align: center; margin-bottom: 15px; font-weight: bold; }
+  textarea { width: 100%; background: #001a1a; color: #0ff; border: 1px solid #0ff; padding: 10px; box-sizing: border-box; }
+  button { width: 100%; padding: 14px; background: #0ff; color: #000; font-weight: bold; border: none; margin-top: 10px; font-size: 16px; cursor: pointer; }
+  #reply { border: 1px solid #0ff; padding: 12px; margin-top: 15px; min-height: 100px; white-space: pre-wrap; color: #fff; }
+</style>
+</head>
+<body>
+<h1>J.A.R.V.I.S</h1>
+<div id="status">BRAIN: NOT CONNECTED</div>
+<textarea id="prompt" rows="4">Hello J.A.R.V.I.S</textarea>
+<button onclick="ask()">SEND REQUEST</button>
+<div id="reply">Waiting for response...</div>
+
+<script>
+// Paste a fresh Google AI Studio key below for local testing
+const API_KEY = "";
+const MODEL = "gemini-3.5-flash-lite";
+
+async function ask() {
+  const replyEl = document.getElementById("reply");
+  const statusEl = document.getElementById("status");
+  const promptText = document.getElementById("prompt").value.trim();
+
+  if (!promptText) {
+    replyEl.innerText = "Please enter a prompt first.";
+    return;
+  }
+
+  replyEl.innerText = "PROCESSING...";
+  statusEl.innerText = "CONNECTING...";
+  statusEl.style.color = "#ff0";
+
+  try {
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${encodeURIComponent(API_KEY)}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: promptText }] }]
+        })
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok || data.error) {
+      throw new Error(data.error?.message || `HTTP ${res.status}`);
+    }
+
+    const answer = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!answer) {
+      throw new Error("No text returned in response.");
+    }
+
+    replyEl.innerText = answer;
+    statusEl.innerText = "✓ BRAIN ONLINE";
+    statusEl.style.color = "#0f0";
+  } catch (e) {
+    replyEl.innerText = "ERROR: " + e.message;
+    statusEl.innerText = "CONNECTION FAILED";
+    statusEl.style.color = "#f00";
+  }
+}
+</script>
+</body>
+</html>
