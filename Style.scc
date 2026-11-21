@@ -1,6 +1,6 @@
 style.css:
 body {
-  background-color: #010409;
+  background-color: #00e54;
   color: #00e5ff;
   font-family: monospace;
   display: flex;
